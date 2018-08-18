@@ -1,23 +1,24 @@
-const { Router } = require('express');
+import Router from 'koa-router';
 
-const router = Router();
+const router = new Router();
 
 // Mock Users
 const users = [{ name: 'Alexandre' }, { name: 'Pooya' }, { name: 'Sébastien' }];
 
 /* GET users listing. */
-router.get('/users', function(req, res, next) {
-    res.json(users);
+router.get('/api/users', ctx => {
+    ctx.body = users;
 });
 
 /* GET user by ID. */
-router.get('/users/:id', function(req, res, next) {
-    const id = parseInt(req.params.id);
+router.get('/api/users/:id', ctx => {
+    const id = parseInt(ctx.params.id);
     if (id >= 0 && id < users.length) {
-        res.json(users[id]);
+        ctx.body = users[id];
     } else {
-        res.sendStatus(404);
+        ctx.status = 404;
+        ctx.body = 'Không tìm thấy';
     }
 });
 
-module.exports = router;
+export default router;

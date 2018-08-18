@@ -1,16 +1,18 @@
-const express = require('express');
+import koa from 'koa';
+import cors from '@koa/cors';
 
-// Create express instnace
-const app = express();
+import users from './routes/users';
 
-// Require API routes
-const users = require('./routes/users');
+const app = new koa();
 
-// Import API Routes
-app.use(users);
+app.use(
+    cors({
+        origin: 'http://localhost:8080',
+    }),
+);
 
-// Export the server middleware
-module.exports = {
-    path: '/api',
-    handler: app,
-};
+app.use(users.routes());
+
+app.listen(process.env.PORT || 3000, () => {
+    console.log('Server is running on port 3000!');
+});
