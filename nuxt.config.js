@@ -10,9 +10,10 @@ export default {
             { hid: 'description', content: 'Auth Routes example' },
         ],
     },
+    port: 8080,
     css: ['~/assets/css/main.css'],
     build: {
-        watch: ['api'],
+        // watch: ['api'],
         extend(config, ctx) {
             if (ctx.isDev && ctx.isClient) {
                 config.module.rules.push({
@@ -24,14 +25,14 @@ export default {
             }
         },
     },
-    serverMiddleware: [
-        bodyParser.json(),
-        session({
-            secret: 'super-secret-key',
-            resave: false,
-            saveUninitialized: false,
-            cookie: { maxAge: 60000 },
-        }),
-        '~/api',
-    ],
+    // serverMiddleware: [
+    //     bodyParser.json(),
+    //     session({
+    //         secret: 'super-secret-key',
+    //         resave: false,
+    //         saveUninitialized: false,
+    //         cookie: { maxAge: 60000 },
+    //     }),
+    //     '~/api',
+    // ],
 };
