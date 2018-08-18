@@ -1,10 +1,10 @@
 import * as axios from 'axios';
 
 const options = {};
-// The server-side needs a full url to works
-if (process.server) {
-    options.baseURL = `http://${process.env.HOST || 'localhost'}:${process.env.PORT ||
-        3000}`;
-}
+
+const PORT = 3000; // process.env.NODE_ENV == 'development' ? 3000 : process.env.PORT || 8080;
+const HOST = process.env.HOST || 'localhost';
+
+options.baseURL = `http://${HOST}:${PORT}`;
 
 export default axios.create(options);
