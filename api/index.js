@@ -1,18 +1,23 @@
 import koa from 'koa';
 import cors from '@koa/cors';
 
-import users from './routes/users';
+import database from '../server/database/database';
+import usersRouter from './routes/users';
 
-const app = new koa();
+(async function() {
+    await database();
 
-app.use(
-    cors({
-        origin: 'http://localhost:8080',
-    }),
-);
+    const app = new koa();
 
-app.use(users.routes());
+    app.use(
+        cors({
+            origin: 'http://localhost:8080',
+        }),
+    );
 
-app.listen(process.env.PORT || 3000, () => {
-    console.log('Server is running on port 3000!');
-});
+    app.use(usersRouter.routes());
+
+    app.listen(process.env.PORT || 3000, () => {
+        console.log('Server is running on port 3000!');
+    });
+})();
