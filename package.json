@@ -21,6 +21,9 @@
             "api"
         ]
     },
+    "engines": {
+        "node": ">=8.0.0"
+    },
     "dependencies": {
         "@koa/cors": "^2.2.2",
         "axios": "^0.18.0",
@@ -28,7 +31,9 @@
         "express": "^4.16.3",
         "express-session": "^1.15.6",
         "koa": "^2.5.2",
+        "koa-bodyparser": "^4.2.1",
         "koa-router": "^7.4.0",
+        "moment": "^2.22.2",
         "nuxt-edge": "^2.0.0-25565730.1ec5cf7",
         "realm": "^2.14.2"
     },
