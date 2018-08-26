@@ -1,5 +1,5 @@
 import { isNameValid, isDescriptionValid } from '../utils/Validation';
-import Model from '../utils/Model';
+import { Model } from '../utils/Model';
 import { db } from '../../database/database';
 
 class Genre extends Model {
@@ -16,7 +16,7 @@ class Genre extends Model {
      */
     static isRawValid(input) {
         isNameValid(input.name);
-        isDescriptionValid(input.desciption);
+        isDescriptionValid(input.description);
     }
 
     /**
@@ -29,22 +29,30 @@ class Genre extends Model {
         }
         return await Genre.write({
             name: input.name,
-            description: input.desciption,
+            description: input.description,
         });
     }
 
     //vì name là khóa chính nên không thể sửa
-    async update(input) {
-        db.realm.write(() => {
-            if (input.hasOwnProperty('description')) {
-                isDescriptionValid(input.description);
-                this.description = input.description;
-            }
+    update(input) {
+        return new Promise(resolve => {
+            db.realm.write(() => {
+                if (input.hasOwnProperty('description')) {
+                    isDescriptionValid(input.description);
+                    this.description = input.description;
+                    resolve(this);
+                }
+            });
         });
     }
 
-    async delete() {
-        db.realm.delete(this);
+    delete() {
+        return new Promise(resolve => {
+            db.realm.write(() => {
+                db.realm.delete(this);
+                resolve();
+            });
+        });
     }
 }
 

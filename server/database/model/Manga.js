@@ -7,7 +7,7 @@ import {
     isMangaTypeValid,
     isStatusTypeValid,
 } from '../utils/Validation';
-import Model from '../utils/Model';
+import { Model } from '../utils/Model';
 import { db, Image, Genre } from '../../database/database';
 import moment from 'moment';
 
@@ -62,57 +62,69 @@ class Manga extends Model {
     /**
      * @param {import('../interface/manga').Input} input
      */
-    async update(input) {
-        db.realm.write(() => {
-            if (input.hasOwnProperty('name')) {
-                isNameValid(input.name);
-                this.name = input.name;
-            }
-            if (input.hasOwnProperty('associatedNames')) {
-                isNameValid(input.associatedNames);
-                this.associatedNames = input.associatedNames;
-            }
-            if (input.hasOwnProperty('type')) {
-                isMangaTypeValid(input.type);
-                this.type = input.type;
-            }
-            if (input.hasOwnProperty('status')) {
-                isStatusTypeValid(input.status);
-                this.status = input.status;
-            }
-            if (input.hasOwnProperty('publishedFrom')) {
-                const publishedFrom = moment(input.publishedFrom, 'DD-MM-YYYY').toDate();
-                isDateValid(publishedFrom);
-                this.publishedFrom = publishedFrom;
-            }
-            if (input.hasOwnProperty('publishedTo')) {
-                const publishedTo = moment(input.publishedTo, 'DD-MM-YYYY').toDate();
-                isDateValid(publishedTo);
-                this.publishedTo = publishedTo;
-            }
-            if (input.hasOwnProperty('genres')) {
-                isGenreNamesValid(input.genreNames);
-                this.genres = input.genreNames.map(genreName =>
-                    Genre.getByName(genreName),
-                );
-            }
-            if (input.hasOwnProperty('authors')) {
-                isAuthorsValid(input.authors);
-                this.authors = input.authors;
-            }
-            if (input.hasOwnProperty('description')) {
-                isDescriptionValid(input.description);
-                this.description = input.description;
-            }
-            if (input.hasOwnProperty('image')) {
-                Image.isIdValid(input.imageId);
-                this.image = Image.getById(input.imageId);
-            }
+    update(input) {
+        return new Promise(resolve => {
+            db.realm.write(() => {
+                if (input.hasOwnProperty('name')) {
+                    isNameValid(input.name);
+                    this.name = input.name;
+                }
+                if (input.hasOwnProperty('associatedNames')) {
+                    isNameValid(input.associatedNames);
+                    this.associatedNames = input.associatedNames;
+                }
+                if (input.hasOwnProperty('type')) {
+                    isMangaTypeValid(input.type);
+                    this.type = input.type;
+                }
+                if (input.hasOwnProperty('status')) {
+                    isStatusTypeValid(input.status);
+                    this.status = input.status;
+                }
+                if (input.hasOwnProperty('publishedFrom')) {
+                    const publishedFrom = moment(
+                        input.publishedFrom,
+                        'DD-MM-YYYY',
+                    ).toDate();
+                    isDateValid(publishedFrom);
+                    this.publishedFrom = publishedFrom;
+                }
+                if (input.hasOwnProperty('publishedTo')) {
+                    const publishedTo = moment(input.publishedTo, 'DD-MM-YYYY').toDate();
+                    isDateValid(publishedTo);
+                    this.publishedTo = publishedTo;
+                }
+                if (input.hasOwnProperty('genres')) {
+                    isGenreNamesValid(input.genreNames);
+                    this.genres = input.genreNames.map(genreName =>
+                        Genre.getByName(genreName),
+                    );
+                }
+                if (input.hasOwnProperty('authors')) {
+                    isAuthorsValid(input.authors);
+                    this.authors = input.authors;
+                }
+                if (input.hasOwnProperty('description')) {
+                    isDescriptionValid(input.description);
+                    this.description = input.description;
+                }
+                if (input.hasOwnProperty('image')) {
+                    Image.isIdValid(input.imageId);
+                    this.image = Image.getById(input.imageId);
+                }
+                resolve(this);
+            });
         });
     }
 
-    async delete() {
-        db.realm.delete(this);
+    //TODO: sẽ viết sau
+    delete() {
+        return new Promise(resolve => {
+            db.realm.write(() => {
+                db.realm.delete(this);
+                resolve();
+            });
+        });
     }
 }
 

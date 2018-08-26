@@ -1,5 +1,5 @@
 import { isNameValid } from '../utils/Validation';
-import Model from '../utils/Model';
+import { Model } from '../utils/Model';
 import { db, Manga } from '../../database/database';
 
 class Chapter extends Model {
@@ -15,18 +15,26 @@ class Chapter extends Model {
         });
     }
 
-    async update(input) {
-        db.realm.write(() => {
-            if (input.hasOwnProperty('name')) {
-                isNameValid(input.name);
-                this.name = input.name;
-            }
-            this.isPublished = true;
+    update(input) {
+        return new Promise(resolve => {
+            db.realm.write(() => {
+                if (input.hasOwnProperty('name')) {
+                    isNameValid(input.name);
+                    this.name = input.name;
+                }
+                this.isPublished = true;
+                resolve(this);
+            });
         });
     }
 
-    async delete() {
-        db.realm.delete(this);
+    delete() {
+        return new Promise(resolve => {
+            db.realm.write(() => {
+                db.realm.delete(this);
+                resolve();
+            });
+        });
     }
 }
 

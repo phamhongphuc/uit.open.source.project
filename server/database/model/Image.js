@@ -1,14 +1,15 @@
 import { isNameValid, isUrlValid } from '../utils/Validation';
-import Model from '../utils/Model';
+import { Model } from '../utils/Model';
 import { db, Chapter } from '../../database/database';
 
 class Image extends Model {
     /**
      * @param {import('../interface/image').Input} input
      */
-    static isRawValid(image) {
-        isNameValid(image.name);
-        isUrlValid(image.url);
+    static isRawValid(input) {
+        isNameValid(input.name);
+        isUrlValid(input.url);
+        Chapter.isIdValid(input.chapterId);
     }
 
     /**
@@ -25,7 +26,12 @@ class Image extends Model {
     }
 
     async delete() {
-        db.realm.delete(this);
+        return new Promise(resolve => {
+            db.realm.write(() => {
+                db.realm.delete(this);
+                resolve();
+            });
+        });
     }
 }
 
