@@ -5,14 +5,7 @@ import { Image } from '../../database/model';
  */
 
 const Query = {
-    images() {
-        return Image.list;
-    },
-
-    /** @type {import('graphql-tools').IFieldResolver<any, any, {id: Number}>} */
-    manga(_, { id }) {
-        return Image.getById(id);
-    },
+    // Empty
 };
 
 const Mutation = {
@@ -20,6 +13,16 @@ const Mutation = {
     async addImage(_, { input }) {
         const image = await Image.create(input);
         return image;
+    },
+
+    /** @type {import('graphql-tools').IFieldResolver<any, any, {id: number}>} */
+    async deleteImage(_, { id }) {
+        const image = Image.getById(id);
+        if (image === undefined) {
+            throw new Error('Thể loại này chưa được tạo');
+        }
+        await image.delete();
+        return true;
     },
 };
 
