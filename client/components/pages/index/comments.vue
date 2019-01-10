@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="row mb-2 justify-content-end">
+        <div class="row mb-2 justify-content-end px-2">
             <b-button
                 v-for="(set, index) in ['Recent comments', 'Top comments']"
                 :key="index"

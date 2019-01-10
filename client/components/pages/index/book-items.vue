@@ -13,7 +13,11 @@
             </b-button>
         </div>
         <div class="row px-2">
-            <div v-for="(item, index) in items" :key="index" class="col-12 p-2">
+            <div
+                v-for="(item, index) in mangas"
+                :key="index"
+                class="col-12 p-2"
+            >
                 <book-item- :item="item" />
             </div>
         </div>
@@ -33,7 +37,7 @@ export default {
     },
     computed: {
         ...mapState({
-            items: state => state.manga.items,
+            mangas: state => state.manga.mangas,
         }),
     },
 };
