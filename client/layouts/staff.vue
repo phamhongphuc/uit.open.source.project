@@ -9,15 +9,6 @@
         </main>
     </div>
 </template>
-<script>
-export default {
-    components: {
-        ...'~/components/footer/footer.vue',
-        ...'~/components/header/navbar.vue',
-        ...'~/components/staff/sidebar.vue',
-    },
-};
-</script>
 <style lang="scss">
 #staff {
     position: fixed;

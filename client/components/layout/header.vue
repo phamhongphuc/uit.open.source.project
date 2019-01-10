@@ -55,7 +55,6 @@
         </b-collapse>
     </b-navbar>
 </template>
-
 <script>
 import { mapState } from 'vuex';
 

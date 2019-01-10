@@ -17,9 +17,5 @@ export default {
             title: 'Ai Scanlation',
         };
     },
-    async asyncData({ store }) {
-        await store.dispatch('manga/fetchMangas');
-        return {};
-    },
 };
 </script>

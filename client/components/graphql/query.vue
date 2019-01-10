@@ -28,7 +28,7 @@
 export default {
     props: {
         query: {
-            type: String,
+            type: [String, Object],
             required: true,
         },
         variables: {

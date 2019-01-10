@@ -21,9 +21,6 @@
 </template>
 <script>
 export default {
-    components: {
-        ...'~/components/social/comment.vue',
-    },
     data() {
         return {
             select: 'recommended',

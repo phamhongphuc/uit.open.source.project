@@ -44,10 +44,6 @@
 import { mapState } from 'vuex';
 
 export default {
-    components: {
-        ...'~/components/utilities/ratio-box.vue',
-        ...'~/components/utilities/image.vue',
-    },
     props: {
         item: {
             type: Object,
