@@ -66,15 +66,17 @@
                     </div>
                     <div class="d-flex mx-3 mb-3">
                         <b-form-radio-group
-                            id="btnradios3"
-                            v-model="contentTab"
+                            v-model="currentTab"
                             buttons
                             button-variant="main"
                             :options="['Chapters', 'Reviews', 'Comments']"
                             name="radioBtnStacked"
                         />
                     </div>
-                    <div class="mx-3 shadow bg-white rounded">
+                    <div
+                        v-if="currentTab == 'Chapters'"
+                        class="mx-3 shadow bg-white rounded"
+                    >
                         <template
                             v-for="(chapter, index) in sortChapters(
                                 manga.chapters,
@@ -90,6 +92,57 @@
                             </nuxt-link>
                         </template>
                     </div>
+                    <div v-if="currentTab == 'Reviews'" class="mx-3">
+                        <div class="d-flex mb-3">
+                            <div>
+                                <image-
+                                    class="rounded-circle shadow mb-1"
+                                    source="https://cdn.myanimelist.net/images/userimages/thumbs/7409496_thumb.webp"
+                                />
+                                <div class="icon vote-button"></div>
+                                <div class="vote-number">28</div>
+                                <div class="icon vote-button"></div>
+                            </div>
+                            <div
+                                class="bg-white shadow rounded ml-3 flex-fill review"
+                            >
+                                <div class="d-flex align-items-center">
+                                    <div class="text-bold px-3 py-2">
+                                        User name
+                                    </div>
+                                    <div class="my-2 py-1 px-2 rounded spoiler">
+                                        SPOILER
+                                    </div>
+                                </div>
+                                <div class="hr" />
+                                <div class="px-3 py-2">
+                                    <div class="pre-line">{{ review }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <div>
+                                <image-
+                                    class="rounded-circle shadow mb-1"
+                                    source="https://cdn.myanimelist.net/images/userimages/thumbs/7409496_thumb.webp"
+                                />
+                                <div class="icon vote-button"></div>
+                                <div class="vote-number">15</div>
+                                <div class="icon vote-button"></div>
+                            </div>
+                            <div
+                                class="bg-white shadow rounded ml-3 flex-fill review"
+                            >
+                                <div class="d-flex align-items-center">
+                                    <div class="text-bold px-3 py-2">
+                                        User name
+                                    </div>
+                                </div>
+                                <div class="hr" />
+                                <div class="px-3 py-2">{{ review }}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </template>
@@ -97,6 +150,15 @@
 </template>
 <script>
 import { getManga } from '~/query/manga';
+
+const review = `Kurenai is the 08 spring anime I had the highest hopes for, and I surely wasn't let down by it.
+The artwork in the series is amazing. The main reason for this is the coloring - it's so vivid! It's sharp and varied colors, something which - as of what I've experienced - is unprecedented. The detail may skimp a bit now and then - which drags it down to a 9 (yes, I wanted to give it a 10). Oh, and the OP theme animations is pretty whacky - which is both good and bad.
+The characters are as colorful as the animation is, even the minor characters. I really liked that, because it makes it oh so more realistic. And it's not only the characters as individuals, but also their relationships which I really loved. That does cover well up for the lack of character development that a 12-episode series is pretty much doomed to have.
+The story in itself is very good too. It starts out very slice of life-ish, going with an episode-by-episode format, where Murasaki learns how the real world looks - after all, she's just escaped from being locked into a house with the most woman-discriminating family I've ever heard about, both in fiction and real life. But that being said, the episodes were great, because so much seemed to happen - often they featured parallel stories with Murasaki and someone else (often Shinkurou's two female neighbors) in one, and Shinkurou in another one. Halfway into the series, and a few episodes more, the series takes a drastic turn, and the more dramatic sides of the show starts to unfold, in contrast to the often light and comedic moments of the earlier episodes. It all culminates into two-three episodes with much action and drama, and an end which you're either gonna love or hate - I can't say more without spoiling anything.
+The soundtrack is jazzy, and fits right into the scenes and the mood. Personally, I liked it, but it wasn't anything spectacular, and if you don't like the jazzy type of soundtrack, you can find comfort in the fact that you often don't notice it at all.
+I really enjoyed this series, both because of its mix of many genres, special animation and wonderful characters, but also because of the calmness this anime presented. Even during the most intense scenes - either emotional or action-packed - I found it to be very calm. Personally, I think that gave the series that little extra which made me love it so much.
+To 'Not Helpful' voters (and you 'Helpful' voters too): Feedback greatly appreciated =)
+`;
 
 export default {
     head() {
@@ -107,7 +169,8 @@ export default {
     data() {
         return {
             getManga,
-            contentTab: 'Chapters',
+            currentTab: 'Reviews',
+            review,
         };
     },
     methods: {
@@ -183,5 +246,51 @@ export default {
         text-decoration: none;
         background: rgba($black, 0.075);
     }
+}
+
+.review {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+    &::after {
+        content: 'read more';
+        font-style: italic;
+        font-weight: 500;
+        color: rgba($main, 1);
+        position: absolute;
+        background: rgb(255, 255, 255);
+        background: linear-gradient(
+            0deg,
+            rgba(white, 1) 10%,
+            rgba(white, 0) 100%
+        );
+        line-height: 150px;
+        text-align: center;
+        bottom: -2px;
+        height: 100px;
+        left: 0;
+        right: 0;
+    }
+}
+
+.vote-button {
+    text-align: center;
+    font-size: 1.75rem;
+    cursor: pointer;
+    &:hover {
+        color: $main;
+    }
+}
+.vote-number {
+    cursor: default;
+    text-align: center;
+    font-size: 1.5rem;
+    margin: -0.5rem 0;
+}
+
+.spoiler {
+    background: $red;
+    color: $white;
+    font-size: 0.75em;
 }
 </style>
