@@ -26,36 +26,14 @@
     </div>
 </template>
 <script>
-import gql from 'graphql-tag';
+import { getMangas } from '~/query/manga';
 
 export default {
     data() {
         return {
             select: 'recommended',
-            getMangas: gql`
-                query getMangas {
-                    mangas {
-                        id
-                        name
-                        description
-                        status
-                        genres {
-                            name
-                        }
-                        image {
-                            url
-                        }
-                        chapters {
-                            id
-                            name
-                        }
-                    }
-                }
-            `,
+            getMangas,
         };
     },
 };
 </script>
-<style lang="scss">
-//@at-root
-</style>

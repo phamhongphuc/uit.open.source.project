@@ -1,146 +1,76 @@
 <template>
-    <div>
-        <div class="row">
-            <b-button
-                class="m-2 shadow"
-                size="md"
-                variant="white"
-                to="/staff/manga"
-                exact
-            >
-                <span class="icon"></span>
-                <span>Back</span>
-            </b-button>
-            <b-button
-                class="m-2 ml-auto shadow"
-                size="md"
-                variant="white"
-                @click="newChapter"
-            >
-                <span class="icon"></span>
-                <span>New Chapter</span>
-            </b-button>
-        </div>
-        <div class="row-like staff-manga-list">
-            <div class="mx-2 my-3 bg-white shadow rounded">
-                <b-table
-                    class="table-border-inside table-cell-middle"
-                    :per-page="10"
-                    :current-page="currentPage"
-                    :items="chapters"
-                    :fields="chaptersFields"
-                >
-                    <template slot="images" slot-scope="data">
-                        {{ !data.value ? '' : data.value.length }}
-                    </template>
-                    <template slot="action" slot-scope="data">
-                        <div class="d-flex nm-1">
-                            <b-button
-                                variant="main"
-                                size="sm"
-                                class="icon m-1"
-                                :to="toEditChapter(data)"
-                            >
-                                
-                            </b-button>
-                            <b-button
-                                variant="danger"
-                                size="sm"
-                                class="icon m-1"
-                                @click="deleteChapter(data)"
-                            >
-                                
-                            </b-button>
+    <query-
+        :query="getManga"
+        :variables="{
+            id: parseInt($route.params.mangaId),
+        }"
+    >
+        <template slot-scope="{ data: { manga } }">
+            <div class="book-page-header shadow-sm mb-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-4">
+                            <ratio-box-
+                                :dx="850"
+                                :dy="1200"
+                                class="bg-white shadow-sm rounded book-page-cover"
+                            />
                         </div>
-                    </template>
-                </b-table>
-                <div v-if="chapters.length === 0" class="p-3">
-                    <span>
-                        There are no items to show in this list. Please press
-                    </span>
-                    <kbd>New chapter</kbd>
-                    <span>to add one.</span>
+                        <div class="col-8">
+                            <div class="book-page-title">{{ manga.name }}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="d-flex">
-                <b-pagination
-                    v-model="currentPage"
-                    first-text="<span class=&quot;icon&quot;></span>"
-                    prev-text="<span class=&quot;icon&quot;></span>"
-                    next-text="<span class=&quot;icon&quot;></span>"
-                    last-text="<span class=&quot;icon&quot;></span>"
-                    class="mx-2 ml-auto d-inline-flex shadow pagination-border-inside"
-                    size="md"
-                    :total-rows="chapters.length"
-                    :per-page="10"
-                />
+            <div class="container">
+                <!-- -->
+                content
+                <br />
+                <br />
+                <br />
+                12312312
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
             </div>
-        </div>
-    </div>
+        </template>
+    </query->
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { getManga } from '~/query/manga';
 
 export default {
-    layout: 'staff',
     head() {
         return {
             title: 'Manga Detail',
         };
     },
-    async asyncData({ store, route }) {
-        await store.dispatch('manga/fetchManga', {
-            mangaId: parseInt(route.params.mangaId),
-        });
-        return {};
-    },
     data() {
         return {
-            currentPage: 0,
-            chaptersFields: [
-                {
-                    key: 'id',
-                    label: '#',
-                    class: 'text-center table-cell-id',
-                },
-                {
-                    key: 'name',
-                    class: 'w-100',
-                },
-                {
-                    key: 'images',
-                    class: 'text-center',
-                },
-                {
-                    key: 'action',
-                },
-            ],
+            getManga,
         };
-    },
-    computed: {
-        chapters() {
-            return this.getChapters(parseInt(this.$route.params.mangaId));
-        },
-        ...mapGetters({
-            getChapters: 'chapter/getChapters',
-        }),
-    },
-    methods: {
-        toEditChapter(data) {
-            return `/staff/manga/${this.$route.params.mangaId}/${data.item.id}`;
-        },
-        async deleteChapter(data) {
-            await this.$store.dispatch('chapter/deleteChapter', {
-                chapterId: data.item.id,
-                mangaId: parseInt(this.$route.params.mangaId),
-            });
-        },
-        async newChapter() {
-            await this.$store.dispatch('chapter/newChapter', {
-                mangaId: parseInt(this.$route.params.mangaId),
-                name: 'new chap',
-            });
-        },
     },
 };
 </script>
+<style lang="scss">
+.book-page-header {
+    background: #fafafa;
+    .book-page-cover {
+        transform: translateY(2rem);
+    }
+
+    .book-page-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+}
+</style>
