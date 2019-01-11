@@ -27,7 +27,12 @@ export const getManga = gql`
             id
             name
             description
+            associatedNames
+            publishedFrom
+            publishedTo
             status
+            type
+            authors
             genres {
                 name
             }
