@@ -1,6 +1,6 @@
 <template>
     <div id="staff">
-        <navbar- />
+        <header- />
         <main>
             <sidebar- />
             <div class="content">
