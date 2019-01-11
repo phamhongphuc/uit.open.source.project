@@ -69,7 +69,7 @@
                             v-model="currentTab"
                             buttons
                             button-variant="main"
-                            :options="['Chapters', 'Reviews', 'Comments']"
+                            :options="['Chapters', 'Reviews']"
                             name="radioBtnStacked"
                         />
                     </div>

@@ -31,7 +31,7 @@ import { getMangas } from '~/query/manga';
 export default {
     data() {
         return {
-            select: 'recommended',
+            select: 'Recommended',
             getMangas,
         };
     },

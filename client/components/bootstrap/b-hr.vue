@@ -8,4 +8,7 @@
     height: 1.5px;
     display: block;
 }
+.hr-1 {
+    height: 0.8px;
+}
 </style>
