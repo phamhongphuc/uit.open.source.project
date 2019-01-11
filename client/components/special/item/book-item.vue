@@ -55,7 +55,6 @@ export default {
                 lg: 4,
                 xl: 4,
             },
-            tags: ['Action', 'Yuri', 'Shoujo Ai'],
         };
     },
     computed: {

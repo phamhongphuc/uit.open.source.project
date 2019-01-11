@@ -59,11 +59,6 @@
 import { mapState } from 'vuex';
 
 export default {
-    components: {
-        ...'~/components/bootstrap/b-nav-item-icon.vue',
-        ...'~/components/bootstrap/b-nav-item-input.vue',
-        ...'~/components/bootstrap/b-navbar-hr.vue',
-    },
     data() {
         return {
             isInputFocus: false,

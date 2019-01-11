@@ -78,7 +78,7 @@ export default {
     left: 0;
     right: 0;
     z-index: -1;
-    filter: drop-shadow($box-shadow);
+    filter: drop-shadow($box-shadow-sm);
     &::after {
         content: '';
         position: absolute;
