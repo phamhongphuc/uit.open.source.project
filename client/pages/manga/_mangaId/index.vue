@@ -85,7 +85,7 @@
                             <b-hr- v-if="index !== 0" :key="index * 2 + 1" />
                             <nuxt-link
                                 :key="index * 2"
-                                to="/"
+                                :to="`/manga/${manga.id}/${chapter.id}`"
                                 class="d-block p-3 chapter-item"
                             >
                                 {{ chapter.name }}
@@ -169,7 +169,7 @@ export default {
     data() {
         return {
             getManga,
-            currentTab: 'Reviews',
+            currentTab: 'Chapters',
             review,
         };
     },
@@ -208,7 +208,6 @@ export default {
 .book-page-header {
     background: #fafafa;
     .book-page-header-cover {
-        // transform: translateY(2rem);
         img {
             height: 100%;
             width: 100%;
@@ -245,6 +244,10 @@ export default {
     &:hover {
         text-decoration: none;
         background: rgba($black, 0.075);
+    }
+    &:link {
+        color: $main;
+        font-style: italic;
     }
 }
 

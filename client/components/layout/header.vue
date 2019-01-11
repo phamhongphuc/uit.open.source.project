@@ -12,7 +12,7 @@
                 class="font-pacifico font-size-bigger ml-md-2 mx-auto"
                 to="/"
             >
-                Ai Scanlation {{ breakpoint }}
+                Ai Scanlation
             </b-nav-item>
             <b-nav-item-icon-
                 class="d-md-none mx-1"
