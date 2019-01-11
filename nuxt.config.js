@@ -32,7 +32,6 @@ module.exports = {
     server: {
         port: 8080,
     },
-    mode: 'spa',
     env: { DATA_API, REDIRECT_API },
     css: [{ src: '~/assets/scss/main.scss', lang: 'scss' }],
     modules: [
