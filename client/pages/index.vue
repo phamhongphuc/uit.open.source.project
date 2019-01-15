@@ -1,24 +1,25 @@
 <template>
-    <div id="body" class="container mt-3 mt-sm-4 mt-md-5">
+    <div id="body" class="container">
         <div class="row">
-            <latest- class="col-24 col-md-15 col-lg-17" />
-            <ranking- class="col-24 col-md-9 col-lg-7" />
+            <book-items- class="col-12 col-md-8 py-3" />
+            <comments- class="col-12 col-md-4 py-3" />
         </div>
     </div>
 </template>
 <script>
-import ranking from '~/components/custom/ranking.vue';
-import latest from '~/components/custom/latest.vue';
-
 export default {
     components: {
-        'ranking-': ranking,
-        'latest-': latest,
+        ...'~/components/pages/index/book-items.vue',
+        ...'~/components/pages/index/comments.vue',
     },
     head() {
         return {
-            title: 'Manga Scanlation',
+            title: 'Ai Scanlation',
         };
+    },
+    async asyncData({ store }) {
+        await store.dispatch('manga/fetchMangas');
+        return {};
     },
 };
 </script>

@@ -13,6 +13,7 @@ import {
     isNameValid,
     isStatusTypeValid,
 } from '../utils/Validation';
+import { parseDate } from '../utils/Date';
 
 export const MangaType = {
     MANGA: 0,
@@ -22,14 +23,17 @@ export const MangaType = {
 };
 
 export const StatusType = {
-    ISGOING: 0,
+    ONGOING: 0,
     COMPLETED: 1,
     DROP: 2,
 };
 
+/**
+ * @typedef {import('../interface/manga').IMangaInput} IMangaInput
+ */
 class Manga extends Model {
     /**
-     * @param {import('../interface/manga').Input} input
+     * @param {IMangaInput} input
      */
     static isInputValid(input) {
         isNameValid(input.name);
@@ -38,34 +42,38 @@ class Manga extends Model {
         isStatusTypeValid(input.status);
         isDateValid(input.publishedFrom);
         isDateValid(input.publishedTo);
-        isGenreNamesValid(input.genreNames);
+        isGenreNamesValid(input.genres);
         isAuthorsValid(input.authors);
         isDescriptionValid(input.description);
-        Image.isIdValid(input.imageId);
     }
 
     /**
-     * @param {import('../interface/manga').Input} input
+     * @param {IMangaInput} input
      */
-    static create(input) {
+    static async create(input) {
         Manga.isInputValid(input);
-        return Manga.write({
+        const image = await Image.create(input.image);
+
+        /** @type {Manga} */
+        const manga = await Manga.write({
             id: Manga.nextId,
             name: input.name,
             associatedNames: input.associatedNames,
             type: input.type,
             status: input.status,
-            publishedFrom: moment(input.publishedFrom, 'DD-MM-YYYY').toDate(),
-            publishedTo: moment(input.publishedTo, 'DD-MM-YYYY').toDate(),
-            genres: input.genreNames.map(genreName => Genre.getByName(genreName)),
             authors: input.authors,
             description: input.description,
-            image: Image.getById(input.imageId),
+            publishedFrom: parseDate(input.publishedFrom),
+            publishedTo: parseDate(input.publishedTo),
+            genres: input.genres.map(genreName => Genre.getByName(genreName)),
+            image,
         });
+        return manga;
     }
 
     /**
-     * @param {import('../interface/manga').Input} input
+     * @param {IMangaInput} input
+     * @return {Manga}
      */
     update(input) {
         return new Promise(resolve => {
@@ -87,18 +95,26 @@ class Manga extends Model {
                     this.status = input.status;
                 }
                 if (input.hasOwnProperty('publishedFrom')) {
-                    const publishedFrom = moment(input.publishedFrom, 'DD-MM-YYYY').toDate();
+                    const publishedFrom = moment(
+                        input.publishedFrom,
+                        'DD-MM-YYYY',
+                    ).toDate();
                     isDateValid(publishedFrom);
                     this.publishedFrom = publishedFrom;
                 }
                 if (input.hasOwnProperty('publishedTo')) {
-                    const publishedTo = moment(input.publishedTo, 'DD-MM-YYYY').toDate();
+                    const publishedTo = moment(
+                        input.publishedTo,
+                        'DD-MM-YYYY',
+                    ).toDate();
                     isDateValid(publishedTo);
                     this.publishedTo = publishedTo;
                 }
                 if (input.hasOwnProperty('genres')) {
-                    isGenreNamesValid(input.genreNames);
-                    this.genres = input.genreNames.map(genreName => Genre.getByName(genreName));
+                    isGenreNamesValid(input.genres);
+                    this.genres = input.genres.map(genreName =>
+                        Genre.getByName(genreName),
+                    );
                 }
                 if (input.hasOwnProperty('authors')) {
                     isAuthorsValid(input.authors);
@@ -109,8 +125,8 @@ class Manga extends Model {
                     this.description = input.description;
                 }
                 if (input.hasOwnProperty('image')) {
-                    Image.isIdValid(input.imageId);
-                    this.image = Image.getById(input.imageId);
+                    Image.isIdValid(input.image);
+                    this.image = Image.getById(input.image);
                 }
                 resolve(this);
             });

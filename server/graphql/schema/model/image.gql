@@ -1,0 +1,15 @@
+type Image {
+    id: Int!
+    name: String!
+    url: String!
+    width: Int!
+    height: Int!
+    chapter: Chapter!
+    manga: Manga!
+    # deletehash: String // Not public
+}
+
+input ImageInput {
+    file: Upload!
+    chapterId: Int
+}

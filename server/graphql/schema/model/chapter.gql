@@ -1,0 +1,19 @@
+# Model
+type Chapter {
+    id: Int!
+    name: String!
+    date: Date!
+    manga: Manga!
+    isPublished: Boolean!
+    images: [Image!]!
+}
+
+input ChapterInput {
+    name: String!
+    mangaId: Int!
+}
+
+input ChapterUpdateInput {
+    id: Int!
+    name: String!
+}

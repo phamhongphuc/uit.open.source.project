@@ -1,0 +1,27 @@
+type Mutation {
+    addGenre(input: GenreInput!): Genre
+    updateGenre(input: GenreInput!): Genre
+    deleteGenre(name: String): Boolean
+
+    addManga(input: MangaInput!): Manga
+    updateManga(input: MangaInput!): Manga
+    deleteManga(id: Int): Boolean
+
+    addChapter(input: ChapterInput!): Chapter
+    updateChapter(input: ChapterUpdateInput!): Chapter
+    deleteChapter(id: Int): Boolean
+
+    addImage(input: ImageInput!): Image
+    deleteImage(id: Int): Boolean
+}
+
+type Query {
+    mangas: [Manga!]!
+    manga(id: Int): Manga
+
+    genres: [Genre!]!
+    genre(name: String): Genre
+
+    images: [Image!]!
+    chapter(id: Int): Chapter!
+}

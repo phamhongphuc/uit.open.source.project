@@ -9,10 +9,13 @@
 
 /LICENSE
 /.gitignore
+/.gitattributes
 /.prettierignore
 /.editorconfig
 /.eslintignore
 /yarn.lock
+
+*.gqlconfig
 
 *.svg
 *.ttf
@@ -24,3 +27,6 @@
 *.ico
 
 *.log
+
+*.realm
+*.realm.lock

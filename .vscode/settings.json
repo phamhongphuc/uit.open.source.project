@@ -10,6 +10,7 @@
         "**/.vscode": true,
         "**/dist": true,
         "**/node_modules": true,
+        "realm-object-server": true,
         "build": true,
         "coverage": true,
         "database": true
@@ -29,5 +30,5 @@
     "editor.tabSize": 4,
     "editor.insertSpaces": true,
     "editor.detectIndentation": false,
-    "files.eol": "\n"
+    "files.eol": "\r\n"
 }

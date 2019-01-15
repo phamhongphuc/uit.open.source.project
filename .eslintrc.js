@@ -1,3 +1,5 @@
+var isWin = require('os').platform() === 'win32';
+
 const config = {
     env: {
         node: true,
@@ -30,26 +32,52 @@ const config = {
                 rootPathSuffix: 'client',
             },
         },
+        'import/core-modules': [
+            'vue',
+            'vuex',
+            '@babel/register',
+            '@babel/polyfill',
+            'chalk',
+        ],
     },
     rules: {
-        'eol-last': 'error',
         indent: ['error', 4],
-        'linebreak-style': ['error', 'unix'],
+        camelcase: 'error',
+        'eol-last': 'error',
+        'linebreak-style': ['error', isWin ? 'windows' : 'unix'],
         'no-console': 'warn',
         'no-lonely-if': 'error',
         'prefer-const': 'error',
-        camelcase: 'error',
         'space-before-function-paren': [
             'error',
-            {
-                anonymous: 'never',
-                named: 'never',
-                asyncArrow: 'always',
-            },
+            { anonymous: 'never', named: 'never', asyncArrow: 'always' },
         ],
         'node/no-unsupported-features/es-syntax': 'off',
         'import/prefer-default-export': 'off',
         'vue/html-indent': ['error', 4],
+        'vue/html-self-closing': [
+            'error',
+            { html: { void: 'always', normal: 'always', component: 'always' } },
+        ],
+        'vue/component-name-in-template-casing': ['error', 'kebab-case'],
+        'vue/attributes-order': [
+            'error',
+            {
+                order: [
+                    'DEFINITION', //        is
+                    'LIST_RENDERING', //    v-for
+                    'CONDITIONALS', //      v-if | v-else-if | v-else | v-show | v-cloak
+                    'RENDER_MODIFIERS', //  v-pre | v-once
+                    'GLOBAL', //            id
+                    'UNIQUE', //            ref | key | slot | slot-scope
+                    'TWO_WAY_BINDING', //   v-model
+                    'OTHER_DIRECTIVES', //  v-custom-directive
+                    'OTHER_ATTR', //        custom-prop | v-bind:prop | :prop
+                    'EVENTS', //            v-on:click | @click
+                    'CONTENT', //           v-text | v-html
+                ],
+            },
+        ],
     },
 };
 

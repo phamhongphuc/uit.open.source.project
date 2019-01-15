@@ -1,5 +1,4 @@
 /* eslint-disable no-process-exit */
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import Koa from 'koa';
 import { Nuxt, Builder, Generator } from 'nuxt';
@@ -25,12 +24,15 @@ const PORT = process.env.PORT || 3000;
 
     const nuxt = new Nuxt(config);
 
-    app.use(ctx => {
-        ctx.status = 200;
-        ctx.respond = false;
-        ctx.req.ctx = ctx;
-        nuxt.render(ctx.req, ctx.res);
-    });
+    if (['development', 'generation'].indexOf(process.env.NODE_ENV) === -1) {
+        // Render every route with Nuxt.js
+        app.use(ctx => {
+            ctx.status = 200;
+            ctx.respond = false;
+            ctx.req.ctx = ctx;
+            nuxt.render(ctx.req, ctx.res);
+        });
+    }
 
     app.listen(PORT, HOST, async () => {
         console.log(`Server is running on port ${PORT}!`);
@@ -42,9 +44,6 @@ const PORT = process.env.PORT || 3000;
                 await generate.generate();
                 console.log('Nuxt generated');
 
-                redirects();
-                console.log('Redirects generated');
-
                 process.exit(0);
             } catch (e) {
                 console.log(e);
@@ -53,25 +52,3 @@ const PORT = process.env.PORT || 3000;
         }
     });
 })();
-
-function redirects() {
-    const fs = require('fs');
-
-    const imageIds = [
-        'DrMpC5CXcAApzT7',
-        'DrLSOhtXcAYJPI8',
-        `DrMqUOwXgAAQovd`,
-        `DrEcwc4W4AI7UPh`,
-        `DrEbaS9X4AAN4j3`,
-        `DrASKcjWsAA4Dji`,
-        `Dq9Dz60XQAA2KPq`,
-        `Dq9C6GvWsAM3jDD`,
-        `DqaHFAgX4AAipnm`,
-    ];
-
-    const content = imageIds
-        .map(imageId => `/api/redirect/twitter/image/${imageId} https://pbs.twimg.com/media/${imageId}?format=jpg`)
-        .join('\n');
-
-    fs.writeFileSync('dist/_redirects', content);
-}
