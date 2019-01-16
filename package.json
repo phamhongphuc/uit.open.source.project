@@ -80,7 +80,7 @@
         "download-cli": "^1.1.1",
         "eslint": "^5.12.0",
         "eslint-config-airbnb-base": "^13.1.0",
-        "eslint-config-prettier": "^3.3.0",
+        "eslint-config-prettier": "^3.5.0",
         "eslint-config-standard": "^12.0.0",
         "eslint-import-resolver-babel-plugin-root-import": "^1.1.1",
         "eslint-loader": "^2.1.1",
