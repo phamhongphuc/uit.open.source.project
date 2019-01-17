@@ -43,7 +43,7 @@
         "bootstrap-vue": "^2.0.0-rc.11",
         "form-data": "^2.3.3",
         "graphql": "^14.1.1",
-        "graphql-tag": "^2.10.0",
+        "graphql-tag": "^2.10.1",
         "graphql-tools": "^4.0.3",
         "is-url": "^1.2.4",
         "koa": "^2.6.2",
