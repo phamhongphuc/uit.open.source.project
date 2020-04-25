@@ -47,7 +47,7 @@
         "graphql-tools": "^4.0.3",
         "is-url": "^1.2.4",
         "koa": "^2.6.2",
-        "koa-bodyparser": "^4.2.1",
+        "koa-bodyparser": "^4.3.0",
         "koa-multer": "^1.0.2",
         "koa-router": "^7.4.0",
         "koa-session": "^5.10.1",
