@@ -40,7 +40,7 @@
         "autoprefixer": "^9.4.4",
         "axios": "^0.18.1",
         "bluebird": "^3.7.2",
-        "bootstrap-vue": "^2.11.0",
+        "bootstrap-vue": "^2.13.0",
         "form-data": "^2.3.3",
         "graphql": "^14.6.0",
         "graphql-tag": "^2.10.3",
