@@ -54,7 +54,7 @@
         "moment": "^2.25.3",
         "nuxt": "^2.3.4",
         "nuxt-sass-resources-loader": "^2.0.5",
-        "realm": "2.21.1",
+        "realm": "6.0.3",
         "vue-import-loader": "phamhongphuc/vue-import-loader#v0.2.0",
         "vue-line-clamp": "^1.2.4"
     },
